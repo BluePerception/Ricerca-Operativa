@@ -1,0 +1,52 @@
+\documentclass[10pt,                    % corpo del font principale
+               a4paper,                 % carta A4
+               twoside,                 % impagina per fronte-retro
+               openright,               % inizio capitoli a destra
+               english,                 
+               italian,                 
+]{article} 
+
+\usepackage[utf8]{inputenc}
+
+\begin{document}
+Domande cammini minimi: \\
+D: come scegliere un algoritmo? Motivare la risposta. \\
+R: Se abbiamo tutti i costi postivi possiamo scegliere di usare sia Dijkstra che Bellman Ford. Se è presente almeno un costo negativo oppure viene richiesto di determinare i cammini minimi composti al più da n archi, allora devo utilizzare esclusivamente Bellman Ford. Nel determinare i cammini minimu al più di n archi non posso usare Dijkstra perchè con questo algortimo solo dopo aver fatto tutti i passi ottengo i valori ottimi di ogni etichetta, invece con Bellman Ford ad ogni iterazione ottengo migliori per quel numero di archi (opzione, quindi, migliore). \\
+
+D: come disegnare l'albero e il grafo (NON SEMPRE COINCIDONO) dei cammini minimi?
+\\
+
+D: Discutere la complessità dell'algoritmo di Dijkstra. \\
+R: Questo algoritmo ad ogni iterazione determina il valore ottimo di una etichette al contrario di Bellman Ford che le aggiorna tutte. In questo modo la complessità computazionale si riduce di molto.  
+
+Domande sul simplesso: \\
+D: Scrivere la soluzione di base corrente e dire se è ottima. \\
+R: Osserviamo che il tableau è in forma canonica rispetto alla base X (matrice identica). Anche se sono presenti alcuni costi ridotti negativi, la soluzione di base corrente non è detto che non sia ottima. Ricordiamo che "costi ridotti tutti positivi o nulli" è condizione sufficiente e non necesaria di ottimalità. In poche parole, quando sono tutti positivi è ottima, ma non è detto che se all'inizio abbiamo dei costi negativi allora non sia una soluzione ottima. \\
+
+D: Dire su quali elementi può essere fatto il pivot. \\
+R: Si fa entrare in base una qualsiasi colonna con costo ridotto negativo (se si usa la regola di Bland, si sceglie il valore della variabile con il pedice minore) e per scegliere quella uscente si sceglie la variabile con rapporto "b segnato fratto a" minore e con a che deve essere strattamente positivo (>0). \\
+
+D: Spiegare quando si ottiene una base degenere. \\
+R: Nello scegliere la variabile uscente, se troviamo più rapporti minimi uguali o un rapporto uguale a 0, allora la base risultante sarà degenere. \\
+
+D: Se cambia la base, cambia anche il vertice del poliedro associato alla nuova base corrente? \\
+R: Sì, se si crea una nuova base non degere altrimenti, se si crea una base degenere che scopriato attraverso la regla precedente, il vertice del poliedro associato non cambia. \\
+
+D: Alla prossima iterazione, quale sarà il valore della funzione obiettivo?
+R: Bisogna guardare se, scegliendo la variabile da cambiare, otteniamo una base degenere. Se la otteniamo allora il valore sarà invariato (attenzione che Gigi ci tiene a queste cose) altrimenti sarà aumentato. \\
+
+
+
+
+
+Domande sulla dualità:
+D: Enunciare le condizioni di complementarietà primale duale. \\
+R: Vedere dispense pagina 19.  \\ 
+
+
+ 
+
+
+
+
+\end{document}
