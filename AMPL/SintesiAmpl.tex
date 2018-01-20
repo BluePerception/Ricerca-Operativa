@@ -6,7 +6,9 @@
 \begin{document}
 
 \maketitle
-Sintesi dei comandi base per affrontare una modellazione in AMPL. 
+Sintesi dei comandi base per affrontare una modellazione in AMPL.\\
+\textbf{Fonte}: \\
+\url{http://www.math.unipd.it/~luigi/courses/ricop/m06.lab.03.manualeAMPL.pdf}
 
 \section{Struttura programma}
 Un programma AMPL si compone di file dei seguenti file:
@@ -26,14 +28,6 @@ Alcune regole base:
 \end{itemize}
 
 \section{Elementi di un programma}
-Elementi di un programma:
-\begin{itemize}
-\item insiemi
-\item dati
-\item variabili
-\item funzione obiettivo
-\item vincoli
-\end{itemize}
 
 \subsection{Insiemi}
 
@@ -109,6 +103,7 @@ subject to Fabbisogno{i in Nutrienti}:
 sum{j in Cibi} A[i,j] * Quantita[j] >= Richiesta[i];
 \end{verbatim}
 
+\newpage
 \section{Esempio esercizio - Caseificio}
 \begin{framed}
 \begin{verbatim}
