@@ -1,0 +1,138 @@
+\input{config}
+
+\title{Super sintesi AMPL \\ v 0.1}
+\date{}
+
+\begin{document}
+
+\maketitle
+Sintesi dei comandi base per affrontare una modellazione in AMPL. 
+
+\section{Struttura programma}
+Un programma AMPL si compone di file dei seguenti file:
+\begin{itemize}
+\item .mod - per il modello;
+\item .dat - per i dati separati dal modello, in modo che sia facile cambiarli;
+\item .run - per assemblare le parti ed eseguire lo script.
+\end{itemize}
+
+\section{Regole generiche}
+Alcune regole base:
+\begin{itemize}
+\item AMPL è case sensitive;
+\item i commenti si scrivono con \#;
+\item le istruzioni del modello vanno separate dal punto e virgola;
+\item con \textbf{..} si può indicare un intervallo di valori (es: 1\textbf{..}5).
+\end{itemize}
+
+\section{Elementi di un programma}
+Elementi di un programma:
+\begin{itemize}
+\item insiemi
+\item dati
+\item variabili
+\item funzione obiettivo
+\item vincoli
+\end{itemize}
+
+\subsection{Insiemi}
+
+Gli insiemi descrivono i domini del problema; raggruppano in un vettore i dati del problema. \\
+Dichiarati nel model:
+\begin{verbatim}
+set Insieme;
+\end{verbatim}
+Definiti nel .dat:
+\begin{verbatim}
+set Insieme := 1 2 3 4;
+\end{verbatim}
+\texttt{Insieme[i]} indica il valore nella posizione i-esima. \\
+
+È possibile definire insiemi non solo esplicitamente, ma anche implicitamente attraverso le espressioni di indicizzazione [da approfondire]. Queste espressioni si usano per definire un insieme senza attribuirgli un nome. L'insieme viene poi usato per fare da indice in una sommatoria. In un'espressione di indicizzazione possono comparire, oltre agli insiemi componenti, anche gli indici che li scorrono.
+\begin{verbatim}
+sum{j in Cibi: Costi[j] >= 10} X[j];
+\end{verbatim}
+L'istruzione somma i valori del vettore X corrispondenti agli indici nell'insieme Cibi i cui corrispondenti valori nel vettore Costi sono non inferiori a 10.
+
+\subsection{Dati}
+I dati sono i valori numerici che definiscono in dettaglio il problema che si vuole affrontare, una volta precisata la sua struttura logica. 
+Dichiarati nel model:
+\begin{verbatim}
+param Dato;
+\end{verbatim}
+Definiti nel .dat:
+\begin{verbatim}
+param Dato := 100;
+\end{verbatim}
+
+\subsection{Variabili}
+
+Le variabili vengono dichiarate nel file del modello attraverso la parola chiave \texttt{var}. Possono avere delle restrizioni già della definizione.
+\begin{verbatim}
+var x >=0, <=1000; 
+\end{verbatim}
+
+\subsection{Funzione obiettivo}
+
+La funzione viene indicata nel model da:
+\begin{verbatim}
+minimize/maximize Nome : calcolaQualcosa;
+\end{verbatim}
+
+
+\subsection{Vincoli}
+I vincoli si definiscono nel model con:
+\begin{verbatim}
+subject to/s.t. Nome : espressione;
+\end{verbatim}
+
+\section{Esempio esercizio - Caseificio}
+\begin{framed}
+\begin{verbatim}
+#Caseificio.mod - File del modello AMPL - Caseificio
+
+#### DICHIARAZIONE INSIEMI, PARAMETRI E VARIABILI ####
+set PROD;
+# insieme dei prodotti
+param d{PROD}>=0;
+# domanda massima per i prodotti
+param l{PROD}>=0;
+# quantita' di latte richiesta per ogni Kg di prodotto
+param v{PROD}>=0;
+# prezzo di vendita dei prodotti
+param q{PROD}>=0;
+# massima qt di ciascun prodotto fabbricata da 1 operaio
+param N;
+# numero di operai disponibili
+param L;
+# quantità di latte disponibile
+var x{PROD} >=0;
+# Kg prodotti per ogni tipo di prodotto
+
+#### FUNZIONE E VINCOLI ####
+maximize guadagno_totale: sum{i in PROD} v[i]*x[i];
+subject to domanda{i in PROD}: x[i]<=d[i];
+# vincolo di domanda
+subject to disp_latte: sum{i in PROD} l[i]*x[i]<= L;
+# vincolo sulla disponibilità del latte
+subject to disp_operai: sum{i in PROD} x[i]/q[i]<=N;
+# vincolo sulla disponibilità degli operai
+
+
+#Caseificio.dat - File dei dati - Caseificio
+
+#### DEFINIZIONE INSIEMI, PARAMETRI E VARIABILI ####
+set PROD:= Burro, Ricotta, Mozzarella;
+param: d l v q :=
+Burro 9 20 2.5 2
+Ricotta 23 2 1.1 7
+Mozzarella 18 5 2 3 ;
+param N:=7;
+param L:=120;
+\end{verbatim}
+\end{framed}
+
+
+
+
+\end{document}
