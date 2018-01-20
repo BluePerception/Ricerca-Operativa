@@ -1,6 +1,6 @@
 \input{config}
 
-\title{Super sintesi AMPL \\ v 0.1}
+\title{Super sintesi AMPL \\ v 1.0}
 \date{}
 
 \begin{document}
@@ -81,6 +81,11 @@ Verdure 8;
 Le variabili vengono dichiarate nel file del modello attraverso la parola chiave \texttt{var}. Possono avere delle restrizioni già della definizione.
 \begin{verbatim}
 var x >=0, <=1000; 
+
+# variabili con espressioni indicizzate
+set Cibi;
+var Consumo{Cibi};
+var Quantita{j in Cibi} >= 0, <= QuantitaMax[j];
 \end{verbatim}
 
 \subsection{Funzione obiettivo}
@@ -88,6 +93,7 @@ var x >=0, <=1000;
 La funzione viene indicata nel model da:
 \begin{verbatim}
 minimize/maximize Nome : calcolaQualcosa;
+
 # esempio
 minimize CostoTotale : sum{j in Cibi} Costi[j] * Quantita[j];
 \end{verbatim}
@@ -97,6 +103,7 @@ minimize CostoTotale : sum{j in Cibi} Costi[j] * Quantita[j];
 I vincoli si definiscono nel model con:
 \begin{verbatim}
 subject to/s.t. Nome : espressione;
+
 # esempio
 subject to Fabbisogno{i in Nutrienti}:
 sum{j in Cibi} A[i,j] * Quantita[j] >= Richiesta[i];
